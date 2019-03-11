@@ -1,0 +1,18 @@
+
+.navbar {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 8px;
+}
+
+.gh-username img{
+  border: 2px red solid;
+  width: 32px;
+}
+
+#profile-bio{
+  margin-top:10px;
+}
+
+.timeline .timeline-item {
+  padding-bottom:1em;
+}
