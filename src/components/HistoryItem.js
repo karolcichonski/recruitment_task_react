@@ -4,10 +4,6 @@ function HistoryItem({date, avatarUrl, profileUrl, login, eventUrl, eventType, r
     let histItemClass = "timeline-item";
     let histMarkerClass ="timeline-marker";
 
-    if (!date){
-        histItemClass += " is-hidden";
-    }
-
     if (isPrimary==true) {
         histItemClass += " is-primary";
         histMarkerClass += " is-primary";
@@ -24,6 +20,7 @@ function HistoryItem({date, avatarUrl, profileUrl, login, eventUrl, eventType, r
               <a href={profileUrl}>{" " + login + " "}</a>
             </span>
             <a href={eventUrl}>{eventType + " "}</a>
+            <span>Pull Request</span>
             <p className="repo-name">
               <a href={repoUrl}>{repoName}</a>
             </p>

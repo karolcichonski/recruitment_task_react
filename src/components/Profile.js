@@ -1,11 +1,13 @@
 import React from 'react';
 
 function Profile({ avatarSRC, profileName, profileUrl, profileDesc}){
+    let profileClass ="profile";
+    if (profileName == "") profileClass += " is-hidden";
     return (
         <div className="profile-container column is-full-mobile is-one-second-tablet is-one-third-widescreen ">
             <section>
                 <h2 className="subtitle is-4">Profile</h2>
-                <div className="profile">
+                <div className={profileClass}>
                     <div className="media">
                         <div className="media-left">
                             <figure className="media-left image is-64x64">

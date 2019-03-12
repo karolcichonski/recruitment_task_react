@@ -11,11 +11,10 @@ class App extends React.Component {
   constructor(){
     super();
     this.state={
-      profAvatarSrc: 'http://placekitten.com/200/200',
-      profName: 'John Smitht',
-      profUrl: '@johnsmith',
-      profDesc: 'Lorem ipsum dolor sit amet',
-      history:[],
+      profAvatarSrc: '',
+      profName: '',
+      profUrl: '',
+      profDesc: '',
       histDate: [],
       histAvatarUrl: [],
       histProfileUrl: [],
@@ -84,7 +83,16 @@ class App extends React.Component {
       profAvatarSrc: "http://placekitten.com/200/200",
       profName: "Profile not found",
       profUrl: "#",
-      profDesc: ""
+      profDesc: "",
+      histDate: [],
+      histAvatarUrl: [],
+      histProfileUrl: [],
+      histLogin: [],
+      histEventUrl: [],
+      histEventType: [],
+      histRepoUrl: [],
+      histRepoName: [],
+      histItemNum: 0
     });
   }
 
@@ -100,7 +108,7 @@ class App extends React.Component {
       "PullRequestEvent",
       "PullRequestReviewCommentEvent"
     ];
-    let userName = $('.username.input').val();
+    //let userName = $('.username.input').val();
     let dateFormat = require('dateformat');
     const histDate = [];
     const histAvatarUrl = [];
@@ -112,6 +120,7 @@ class App extends React.Component {
     const histRepoName = [];
 
     response.forEach(singleEvent => {
+     // console.log(singleEvent);
       if (srchEventTable.indexOf(singleEvent.type) >= 0) {
         let dtime = new Date(singleEvent.created_at);
         let date = dateFormat(dtime, "mmm dd, yyyy");
@@ -141,6 +150,35 @@ class App extends React.Component {
       })
   }
 
+  itemHistory(i) {
+    return (
+      <HistoryItem
+        date={this.state.histDate[i]}
+        avatarUrl={this.state.histAvatarUrl[i]}
+        profileUrl={this.state.histProfileUrl[i]}
+        login={this.state.histLogin[i]}
+        eventUrl={this.state.histEventUrl[i]}
+        eventType={this.state.histEventType[i]}
+        repoUrl={this.state.histRepoUrl[i]}
+        repoName={this.state.histRepoName[i]}
+        isPrimary={false}
+        key={i}
+      />
+    );
+
+  }
+
+  renderHistory() {
+    const maxItemCount=20;
+    let components=[];
+    let itemToShow = this.state.histItemNum-1;
+    if (itemToShow>maxItemCount) itemToShow=maxItemCount-1;
+    for (let i = itemToShow; i>=0; i--) {
+      components.push(this.itemHistory(i));
+    }
+    return components;
+  }
+
   render() {
     return (
       <div>
@@ -166,40 +204,7 @@ class App extends React.Component {
                   <h2 className="subtitle is-4">History</h2>
 
                   <div className="timeline" id="user-timeline">
-                    <HistoryItem
-                      date={this.state.histDate[this.state.histItemNum-1]}
-                      avatarUrl={this.state.histAvatarUrl[this.state.histItemNum-1]}
-                      profileUrl={this.state.histProfileUrl[this.state.histItemNum-1]}
-                      login={this.state.histLogin[this.state.histItemNum-1]}
-                      eventUrl={this.state.histEventUrl[this.state.histItemNum - 1]}
-                      eventType={this.state.histEventType[this.state.histItemNum - 1]}
-                      repoUrl={this.state.histRepoUrl[this.state.histItemNum - 1]}
-                      repoName={this.state.histRepoName[this.state.histItemNum - 1]}
-                      isPrimary={false}
-                    />
-                    <HistoryItem
-                      date={this.state.histDate[this.state.histItemNum - 2]}
-                      avatarUrl={this.state.histAvatarUrl[this.state.histItemNum - 2]}
-                      profileUrl={this.state.histProfileUrl[this.state.histItemNum - 2]}
-                      login={this.state.histLogin[this.state.histItemNum -2]}
-                      eventUrl={this.state.histEventUrl[this.state.histItemNum - 2]}
-                      eventType={this.state.histEventType[this.state.histItemNum - 2]}
-                      repoUrl={this.state.histRepoUrl[this.state.histItemNum - 2]}
-                      repoName={this.state.histRepoName[this.state.histItemNum - 2]}
-                      isPrimary={true}
-                    />
-
-                    <HistoryItem
-                      date={this.state.histDate[this.state.histItemNum - 3]}
-                      avatarUrl={this.state.histAvatarUrl[this.state.histItemNum - 3]}
-                      profileUrl={this.state.histProfileUrl[this.state.histItemNum - 3]}
-                      login={this.state.histLogin[this.state.histItemNum - 3]}
-                      eventUrl={this.state.histEventUrl[this.state.histItemNum - 3]}
-                      eventType={this.state.histEventType[this.state.histItemNum - 3]}
-                      repoUrl={this.state.histRepoUrl[this.state.histItemNum - 3]}
-                      repoName={this.state.histRepoName[this.state.histItemNum - 3]}
-                      isPrimary={false}
-                    />
+                    {this.renderHistory()}
                   </div>
                 </section>
               </div>
